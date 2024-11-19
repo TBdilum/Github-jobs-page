@@ -1,6 +1,7 @@
 import React from 'react'
 import JobListing from './JobListing'
 import { useEffect,useState } from 'react';
+import Spinner from './Spinner';
 
 
 function JobListings({isHome=false}) {
@@ -8,9 +9,10 @@ function JobListings({isHome=false}) {
     const [loading,setLoading] = useState(true);
 
     useEffect(() => {
+      const apiUrl = isHome ? 'http://localhost:8000/jobs?_limit=3': 'http://localhost:8000/jobs'
       const fetchJobs = async () => {
         try {
-          const res = await fetch('http://localhost:8000/jobs')
+          const res = await fetch(apiUrl)
           const data = await res.json();
           setJobs(data);
         } catch (error) {
@@ -28,14 +30,18 @@ function JobListings({isHome=false}) {
         <h2 className="text-3xl font-bold text-indigo-500 mb-6 text-center">
           {isHome ? 'Recent Jobs': 'Browse Jobs'}
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        {loading ? (<Spinner loading={loading}/>) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {jobs.map((job)=>(
-                    <JobListing key={job.id} job={job}/>
+            <JobListing key={job.id} job={job}/>
           ))}
-        </div>
+        </div>)
+        }
+
       </div>
     </section>
-    </div>
+  </div>
   )
 }
 
