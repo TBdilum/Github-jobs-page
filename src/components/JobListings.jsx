@@ -1,6 +1,6 @@
 import React from 'react'
-import jobs from '../jobs.json'
 import JobListing from './JobListing'
+import { useEffect,useState } from 'react';
 
 
 function JobListings({isHome=false}) {
