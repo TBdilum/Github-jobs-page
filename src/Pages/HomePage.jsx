@@ -11,7 +11,7 @@ const HomePage = () => {
     <div>
         <Hero/>
         <HomeCards/>
-        <JobListings/>
+        <JobListings isHome={true}/>
         <ViewAllJobs/>
     </div>
   )
